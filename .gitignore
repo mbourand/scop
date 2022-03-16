@@ -1,0 +1,9 @@
+*.sln
+*.vcxproj*
+build
+resources
+Release
+obj
+Debug
+.vscode
+.vs
