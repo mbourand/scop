@@ -34,7 +34,7 @@ void updateViewport(GLFWwindow* window, int width, int height)
 
 int main()
 {
-	srand(time(nullptr));
+	srand(static_cast<unsigned int>(time(nullptr)));
 
 	ezgl::PerspectiveCamera camera(70, 0.1f, 300);
 	ezgl::FlyController flyController(camera);
@@ -71,7 +71,7 @@ int main()
 
 	try
 	{
-		textureImg.loadFile("resources/textures/concrete.bmp");
+		textureImg.loadFile("../../resources/textures/concrete.bmp");
 		Logger::log("Init", "Texture loaded", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
@@ -85,7 +85,7 @@ int main()
 	try
 	{
 		Logger::log("Init", "Loading shaders...");
-		shader.loadFiles("resources/shaders/Model.vert", "resources/shaders/Model.frag");
+		shader.loadFiles("../../resources/shaders/Model.vert", "../../resources/shaders/Model.frag");
 		Logger::log("Init", "Shaders loaded successfully...", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
@@ -99,7 +99,7 @@ int main()
 	ezgl::Mesh model;
 	try
 	{
-		obj.loadFile("resources/models/teapot.obj");
+		obj.loadFile("../../resources/models/teapot.obj");
 		Logger::log("ModelLoader", "Creating the model's mesh...");
 		model = obj.createMesh();
 	}
