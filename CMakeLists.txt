@@ -16,5 +16,5 @@ add_executable(${PROJECT_NAME} src/EZGL/Math/mathutils.cpp src/EZGL/Math/Matrix.
 
 add_subdirectory(external/GLFW)
 add_subdirectory(external/GLEW)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLFW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLEW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLM)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLFW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLEW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLM)
 target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES} libglew_static opengl32 User32 Shell32 Gdi32)
