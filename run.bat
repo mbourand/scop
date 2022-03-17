@@ -1,0 +1,1 @@
+.\build\Debug\scop.exe
