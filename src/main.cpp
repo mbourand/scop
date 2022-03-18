@@ -71,7 +71,7 @@ int main()
 
 	try
 	{
-		textureImg.loadFile("../../resources/textures/concrete.bmp");
+		textureImg.loadFile("../../resources/textures/vrere_delphine.bmp");
 		Logger::log("Init", "Texture loaded", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
@@ -80,6 +80,8 @@ int main()
 		glfwTerminate();
 		return 1;
 	}
+
+	ezgl::Texture texture = textureImg.createTexture();
 
 	ezgl::Shader shader;
 	try
@@ -99,7 +101,7 @@ int main()
 	ezgl::Mesh model;
 	try
 	{
-		obj.loadFile("../../resources/models/teapot.obj");
+		obj.loadFile("../../resources/models/42.obj");
 		Logger::log("ModelLoader", "Creating the model's mesh...");
 		model = obj.createMesh();
 	}
@@ -118,32 +120,24 @@ int main()
 	while (!ezgl::Window::shouldClose())
 	{
 		ezgl::Window::clear();
-
 		ezgl::Window::update();
 
 		shader.bind();
+		texture.bind();
 		modelBuffer.bind();
+
 		shader.sendUniform("u_mvp", camera.getMVP());
 		shader.sendUniform("u_cameraPos", camera.getPosition());
 		shader.sendUniform("u_light", light);
 		shader.sendUniform("u_material", material);
 		shader.sendUniform("u_rotation", modelController.getRotationMatrix());
-
-		ezgl::Vector3<float> pos(50, 0, 0);
-
-		ezgl::Matrix<float, 4, 4> translation;
-		translation.at(0, 0) = 1;
-		translation.at(1, 1) = 1;
-		translation.at(2, 2) = 1;
-		translation.at(3, 3) = 1;
-		translation.at(3, 0) = pos.x;
-		translation.at(3, 1) = pos.y;
-		translation.at(3, 2) = pos.z;
-
-		shader.sendUniform("u_translation", translation);
+		shader.sendUniform("u_translation", modelController.getTranslationMatrix());
+		shader.sendUniform("u_transitionState", modelController.getTransitionValue());
 
 		modelBuffer.draw();
+
 		modelBuffer.unbind();
+		texture.unbind();
 		shader.unbind();
 
 		ezgl::Window::display();

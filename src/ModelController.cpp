@@ -5,13 +5,17 @@ namespace scop
 {
 	ModelController::ModelController()
 	{
+		this->_mode = Mode::Move;
 		this->_direction = Direction::None;
 		this->_upPressed = false;
 		this->_downPressed = false;
-		this->_speed = 1.0f;
+		this->_rotateSpeed = 1.0f;
+		this->_moveSpeed = 1.0f;
 		this->_yaw = 0;
 		this->_pitch = 0;
 		this->_roll = 0;
+		this->_transitionValue = 0.0f;
+		this->_transitionState = false;
 	}
 
 	void ModelController::onKeyPressed(int key, int scancode)
@@ -23,10 +27,18 @@ namespace scop
 		else if (key == GLFW_KEY_Z)
 			this->_direction = (this->_direction == Direction::Z ? Direction::None : Direction::Z);
 
+		if (key == GLFW_KEY_R)
+			this->_mode = Mode::Rotate;
+		if (key == GLFW_KEY_M)
+			this->_mode = Mode::Move;
+
 		if (key == GLFW_KEY_UP)
 			this->_upPressed = true;
 		if (key == GLFW_KEY_DOWN)
 			this->_downPressed = true;
+
+		if (key == GLFW_KEY_TAB)
+			this->_transitionState = !this->_transitionState;
 	}
 
 	void ModelController::onKeyReleased(int key, int scancode)
@@ -37,27 +49,61 @@ namespace scop
 			this->_downPressed = false;
 	}
 
-	void ModelController::onKeyRepeat(int key, int scancode)
+	void ModelController::onKeyRepeat(int key, int scancode) {}
+	void ModelController::onMouseMoved(double x, double y) {}
+	void ModelController::onMouseEntered(int entered) {}
+	void ModelController::onMouseButtonPressed(int button, int mods) {}
+	void ModelController::onMouseButtonReleased(int button, int mods) {}
+
+	void ModelController::onMouseScroll(double xoffset, double yoffset)
 	{
+		if (this->_mode == Mode::Move)
+			this->_moveSpeed = std::max(0.0, this->_moveSpeed + yoffset * 0.2f);
+		if (this->_mode == Mode::Rotate)
+			this->_rotateSpeed = std::max(0.0, this->_rotateSpeed + yoffset * 0.2f);
 	}
 
 	void ModelController::update(float deltaTime)
 	{
 		int dir = this->_upPressed - this->_downPressed;
-		float speed = this->_speed * dir * deltaTime;
+		float speed = (this->_mode == Mode::Move ? this->_moveSpeed : this->_rotateSpeed) * dir * deltaTime;
 
-		switch (this->_direction)
+		if (this->_mode == Mode::Rotate)
 		{
-		case Direction::X:
-			this->_yaw += speed;
-			break;
-		case Direction::Y:
-			this->_pitch += speed;
-			break;
-		case Direction::Z:
-			this->_roll += speed;
-			break;
+			switch (this->_direction)
+			{
+			case Direction::X:
+				this->_yaw += speed;
+				break;
+			case Direction::Y:
+				this->_pitch += speed;
+				break;
+			case Direction::Z:
+				this->_roll += speed;
+				break;
+			}
 		}
+
+		if (this->_mode == Mode::Move)
+		{
+			switch (this->_direction)
+			{
+			case Direction::X:
+				this->_pos.x += speed;
+				break;
+			case Direction::Y:
+				this->_pos.y += speed;
+				break;
+			case Direction::Z:
+				this->_pos.z += speed;
+				break;
+			}
+		}
+
+		if (!this->_transitionState)
+			this->_transitionValue = std::max(0.0f, this->_transitionValue - 0.02f);
+		else
+			this->_transitionValue = std::min(1.0f, this->_transitionValue + 0.02f);
 	}
 
 	ezgl::Matrix<float, 4, 4> ModelController::getRotationMatrix() const
@@ -104,5 +150,16 @@ namespace scop
 		}
 
 		return matrixes[0] * matrixes[1] * matrixes[2];
+	}
+
+	
+	ezgl::Matrix<float, 4, 4> ModelController::getTranslationMatrix() const
+	{
+		return ezgl::translation(this->_pos);
+	}
+
+	float ModelController::getTransitionValue() const
+	{
+		return this->_transitionValue;
 	}
 }

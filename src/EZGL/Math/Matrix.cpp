@@ -31,6 +31,19 @@ namespace ezgl
 		return rotation * translation;
 	}
 
+	Matrix<float, 4, 4> translation(const Vector3<float>& pos)
+	{
+		Matrix<float, 4, 4> translation;
+		translation.at(0, 0) = 1;
+		translation.at(1, 1) = 1;
+		translation.at(2, 2) = 1;
+		translation.at(3, 3) = 1;
+		translation.at(3, 0) = pos.x;
+		translation.at(3, 1) = pos.y;
+		translation.at(3, 2) = pos.z;
+		return translation;
+	}
+
 	Matrix<float, 4, 4> perspective(float fov, float ratio, float near, float far)
 	{
 		Matrix<float, 4, 4> perspective;

@@ -30,6 +30,7 @@ namespace ezgl
 		virtual void update(float deltaTime) override;
 
 		virtual void onMouseMoved(double x, double y) override;
+		virtual void onMouseScroll(double xoffset, double yoffset) override;
 		virtual void onMouseEntered(int entered) override;
 		virtual void onMouseButtonPressed(int button, int mods) override;
 		virtual void onMouseButtonReleased(int button, int mods) override;

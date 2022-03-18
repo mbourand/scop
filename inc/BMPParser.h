@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "EZGL/Texture.h"
 
 namespace scop
 {
@@ -18,5 +19,6 @@ namespace scop
 		
 		BMPParser(const std::string& filename);
 		void loadFile(const std::string& filename);
+		ezgl::Texture createTexture();
 	};
 }

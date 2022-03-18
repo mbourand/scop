@@ -134,5 +134,6 @@ namespace ezgl
 
 	Matrix<float, 4, 4> lookAt(const Vector3<float>& eye, const Vector3<float>& center, const Vector3<float>& upDir);
 	Matrix<float, 4, 4> perspective(float fov, float ratio, float near, float far);
+	Matrix<float, 4, 4> translation(const Vector3<float>& pos);
 }
 

@@ -40,6 +40,7 @@ namespace ezgl
 		glfwSetCursorPosCallback(_window, ezgl::mousePosCallback);
 		glfwSetCursorEnterCallback(_window, ezgl::mouseEnterCallback);
 		glfwSetMouseButtonCallback(_window, ezgl::mouseButtonCallback);
+		glfwSetScrollCallback(_window, ezgl::scrollCallback);
 	}
 
 	void Window::clear()

@@ -30,6 +30,18 @@ namespace ezgl
 			ezgl::Window::showCursor();
 			this->_focused = false;
 		}
+
+		if (key == GLFW_KEY_E)
+		{
+			this->verticalSpeed += 3.0f;
+			this->horizontalSpeed += 3.0f;
+		}
+
+		if (key == GLFW_KEY_Q)
+		{
+			this->verticalSpeed = std::max(0.0f, this->verticalSpeed - 3.0f);
+			this->horizontalSpeed = std::max(0.0f, this->horizontalSpeed - 3.0f);
+		}
 	}
 
 	void FlyController::onKeyReleased(int key, int scancode)
@@ -39,10 +51,7 @@ namespace ezgl
 			*(it->second) = false;
 	}
 
-	void FlyController::onKeyRepeat(int key, int scancode)
-	{
-
-	}
+	void FlyController::onKeyRepeat(int key, int scancode) {}
 
 	void FlyController::onMouseMoved(double x, double y)
 	{
@@ -54,9 +63,9 @@ namespace ezgl
 		ezgl::Window::centerCursor();
 	}
 
-	void FlyController::onMouseEntered(int entered)
-	{
-	}
+	void FlyController::onMouseEntered(int entered) {}
+	void FlyController::onMouseButtonReleased(int button, int mods) {}
+	void FlyController::onMouseScroll(double xoffset, double yoffset) {}
 
 	void FlyController::onMouseButtonPressed(int button, int mods)
 	{
@@ -66,10 +75,6 @@ namespace ezgl
 			ezgl::Window::centerCursor();
 			this->_focused = true;
 		}
-	}
-
-	void FlyController::onMouseButtonReleased(int button, int mods)
-	{
 	}
 
 	void FlyController::update(float deltaTime)

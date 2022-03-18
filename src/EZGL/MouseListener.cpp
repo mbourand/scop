@@ -15,6 +15,12 @@ namespace ezgl
 		std::remove_if(_instances.begin(), _instances.end(), [this](MouseListener* a) -> bool { return a == this; });
 	}
 
+	void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+	{
+		for (auto& instance : MouseListener::_instances)
+			instance->onMouseScroll(xoffset, yoffset);
+	}
+
 	void mousePosCallback(GLFWwindow* window, double x, double y)
 	{
 		for (auto& instance : MouseListener::_instances)

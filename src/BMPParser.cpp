@@ -49,4 +49,16 @@ namespace scop
 	{
 		return (vec[index + 3] << 24) + (vec[index + 2] << 16) + (vec[index + 1] << 8) + vec[index + 0];
 	}
+
+	ezgl::Texture BMPParser::createTexture()
+	{
+		std::vector<unsigned char> formattedPixels;
+		for (auto pixel : this->pixels)
+		{
+			formattedPixels.push_back((pixel >> 16) & 0xFF);
+			formattedPixels.push_back((pixel >> 8) & 0xFF);
+			formattedPixels.push_back((pixel >> 0) & 0xFF);
+		}
+		return ezgl::Texture(this->width, this->height, formattedPixels);
+	}
 }
