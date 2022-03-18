@@ -2,22 +2,22 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <ctime>
-#include "../inc/Logger.h"
-#include "../inc/ObjParser/ObjParser.h"
-#include "../inc/EZGL/Mesh.h"
-#include "../inc/EZGL/VertexBuffer.h"
-#include "../inc/EZGL/Math/Matrix.h"
-#include "../inc/EZGL/Math/Vector.h"
-#include "../inc/EZGL/Shader.h"
-#include "../inc/EZGL/PerspectiveCamera.h"
-#include "../inc/EZGL/FlyController.h"
+#include "Logger.h"
+#include "ObjParser/ObjParser.h"
+#include "EZGL/Mesh.h"
+#include "EZGL/VertexBuffer.h"
+#include "EZGL/Math/Matrix.h"
+#include "EZGL/Math/Vector.h"
+#include "EZGL/Shader.h"
+#include "EZGL/PerspectiveCamera.h"
+#include "EZGL/FlyController.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/matrix_transform_2d.hpp>
-#include "../inc/EZGL/Window.h"
-#include "../inc/ModelController.h"
-#include "../inc/BMPParser.h"
+#include "EZGL/Window.h"
+#include "ModelController.h"
+#include "BMPParser.h"
 
 void updateViewport(GLFWwindow* window, int width, int height)
 {

@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/MouseListener.h"
+#include "EZGL/MouseListener.h"
 #include <algorithm>
 
 namespace ezgl

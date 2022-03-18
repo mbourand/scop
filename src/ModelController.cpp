@@ -1,5 +1,5 @@
-#include "../inc/ModelController.h"
-#include "../inc/EZGL/Math/Vector.h"
+#include "ModelController.h"
+#include "EZGL/Math/Vector.h"
 
 namespace scop
 {

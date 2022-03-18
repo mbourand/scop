@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/Material.h"
+#include "EZGL/Material.h"
 
 namespace ezgl
 {

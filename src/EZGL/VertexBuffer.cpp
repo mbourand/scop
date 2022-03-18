@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/VertexBuffer.h"
+#include "EZGL/VertexBuffer.h"
 
 namespace ezgl
 {
@@ -35,20 +35,20 @@ namespace ezgl
 		
 		GLint location = glGetAttribLocation(shader.getProgramId(), "a_position");
 		glEnableVertexAttribArray(location);
-		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * mesh.getDataTypeSize(), reinterpret_cast<void*>(0x0));
+		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * static_cast<GLsizei>(mesh.getDataTypeSize()), reinterpret_cast<void*>(0x0));
 
 		location = glGetAttribLocation(shader.getProgramId(), "a_normal");
 		glEnableVertexAttribArray(location);
-		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * mesh.getDataTypeSize(), reinterpret_cast<void*>(mesh.getPositionsByteSize()));
+		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * static_cast<GLsizei>(mesh.getDataTypeSize()), reinterpret_cast<void*>(mesh.getPositionsByteSize()));
 
 		location = glGetAttribLocation(shader.getProgramId(), "a_color");
 		glEnableVertexAttribArray(location);
-		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * mesh.getDataTypeSize(), reinterpret_cast<void*>(mesh.getPositionsByteSize() + mesh.getNormalsByteSize()));
+		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 3 * static_cast<GLsizei>(mesh.getDataTypeSize()), reinterpret_cast<void*>(mesh.getPositionsByteSize() + mesh.getNormalsByteSize()));
 	}
 
 	void VertexBuffer::draw() const
 	{
-		glDrawArrays(GL_TRIANGLES, 0, this->_vertricesCount);
+		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(this->_vertricesCount));
 	}
 
 	void VertexBuffer::unbind() const

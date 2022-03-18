@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/Math/mathutils.h"
+#include "EZGL/Math/mathutils.h"
 
 namespace ezgl
 {

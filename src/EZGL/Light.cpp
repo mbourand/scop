@@ -1,5 +1,5 @@
-#include "../../inc/EZGL/Light.h"
-#include "../../inc/EZGL/Math/Vector.h"
+#include "EZGL/Light.h"
+#include "EZGL/Math/Vector.h"
 
 namespace ezgl
 {

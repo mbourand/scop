@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/KeyListener.h"
+#include "EZGL/KeyListener.h"
 #include <algorithm>
 
 namespace ezgl
@@ -12,7 +12,7 @@ namespace ezgl
 
 	KeyListener::~KeyListener()
 	{
-		std::remove_if(_instances.begin(), _instances.end(), [this](KeyListener* a) -> bool { return a == this; });
+		static_cast<void>(std::remove_if(_instances.begin(), _instances.end(), [this](KeyListener* a) -> bool { return a == this; }));
 	}
 
 

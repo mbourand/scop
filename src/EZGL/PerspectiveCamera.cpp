@@ -1,6 +1,6 @@
-#include "../../inc/EZGL/PerspectiveCamera.h"
-#include "../../inc/EZGL/Math/mathutils.h"
-#include "../../inc/EZGL/Window.h"
+#include "EZGL/PerspectiveCamera.h"
+#include "EZGL/Math/mathutils.h"
+#include "EZGL/Window.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 

@@ -1,4 +1,4 @@
-#include "..\inc\Logger.h"
+#include "Logger.h"
 
 std::string Logger::getMessageTypePrefix(Logger::MessageType type)
 {

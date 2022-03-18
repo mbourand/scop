@@ -1,7 +1,7 @@
-#include "../inc/BMPParser.h"
+#include "BMPParser.h"
 #include <fstream>
 #include <stdexcept>
-#include "../inc/Logger.h"
+#include "Logger.h"
 
 namespace scop
 {

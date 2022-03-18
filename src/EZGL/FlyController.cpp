@@ -1,5 +1,5 @@
-#include "../../inc/EZGL/FlyController.h"
-#include "../../inc/EZGL/Window.h"
+#include "EZGL/FlyController.h"
+#include "EZGL/Window.h"
 
 namespace ezgl
 {

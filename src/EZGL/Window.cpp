@@ -2,9 +2,9 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <stdexcept>
-#include "../../inc/EZGL/Window.h"
-#include "../../inc/EZGL/KeyListener.h"
-#include "../../inc/EZGL/MouseListener.h"
+#include "EZGL/Window.h"
+#include "EZGL/KeyListener.h"
+#include "EZGL/MouseListener.h"
 #include <chrono>
 
 namespace ezgl

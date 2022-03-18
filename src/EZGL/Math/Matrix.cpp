@@ -1,4 +1,4 @@
-#include "../../inc/EZGL/Math/Matrix.h"
+#include "EZGL/Math/Matrix.h"
 
 namespace ezgl
 {

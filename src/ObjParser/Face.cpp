@@ -1,4 +1,4 @@
-#include "..\..\inc\ObjParser\Face.h"
+#include "ObjParser\Face.h"
 
 scop::Face::Face()
 {}

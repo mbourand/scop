@@ -1,4 +1,4 @@
-#include "../inc/Utils.h"
+#include "Utils.h"
 
 std::list<std::string> utils::split(const std::string& str, const std::string& charset)
 {

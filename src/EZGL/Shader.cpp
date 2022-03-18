@@ -1,5 +1,5 @@
-#include "../../inc/EZGL/Shader.h"
-#include "../../inc/Logger.h"
+#include "EZGL/Shader.h"
+#include "Logger.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <stdexcept>

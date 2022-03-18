@@ -1,7 +1,7 @@
-#include "..\..\inc\ObjParser\ObjParser.h"
+#include "ObjParser\ObjParser.h"
 #include <fstream>
-#include "..\..\inc\Utils.h"
-#include "..\..\inc\Logger.h"
+#include "Utils.h"
+#include "Logger.h"
 
 namespace scop
 {
