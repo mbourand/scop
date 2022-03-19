@@ -66,8 +66,8 @@ ezgl::Texture generateTexture(const std::string& path)
 
 	try
 	{
+		Logger::log("Init", "Loading texture \"" + path + "\"...");
 		textureImg.loadFile(path);
-		Logger::log("Init", "Texture loaded", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
 	{
@@ -75,6 +75,8 @@ ezgl::Texture generateTexture(const std::string& path)
 		glfwTerminate();
 		exit(1);
 	}
+
+	Logger::log("Init", "Texture loaded", Logger::MessageType::Success);
 
 	return textureImg.createTexture();
 }
@@ -97,6 +99,8 @@ ezgl::Mesh generateModel(const std::string& path)
 		exit(1);
 	}
 
+	Logger::log("ModelLoader", std::to_string(model.getPositions().size() / 3) + " triangles loaded!", Logger::MessageType::Success);
+
 	return model;
 }
 
@@ -106,7 +110,7 @@ ezgl::Shader generateShader()
 	try
 	{
 		Logger::log("Init", "Loading shaders...");
-		shader.loadFiles("../../resources/shaders/Model.vert", "../../resources/shaders/Model.frag");
+		shader.loadFiles("shaders/Model.vert", "shaders/Model.frag");
 		Logger::log("Init", "Shaders loaded successfully...", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
@@ -123,6 +127,12 @@ int main(int argc, char **argv)
 {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
+	if (argc != 3)
+	{
+		Logger::log("Init", "Usage: ./scop <model_path> <texture_path>", Logger::MessageType::Error);
+		return 1;
+	}
+
 	ezgl::PerspectiveCamera camera(70, 0.1f, 300);
 	ezgl::FlyController flyController(camera);
 
@@ -131,15 +141,14 @@ int main(int argc, char **argv)
 
 	initOpenGl(camera);
 
-	ezgl::Texture texture = generateTexture("../../resources/textures/nazi fini.bmp");
+	ezgl::Mesh model = generateModel(argv[1]);
+	ezgl::Texture texture = generateTexture(argv[2]);
 	ezgl::Shader shader = generateShader();
-	ezgl::Mesh model = generateModel("../../resources/models/teapot.obj");
 	
 	ezgl::VertexBuffer modelBuffer(shader, model);
 	scop::ModelController modelController;
 
-	Logger::log("ModelLoader", std::to_string(model.getPositions().size() / 3) + " triangles loaded!", Logger::MessageType::Success);
-
+	Logger::log("Init", "Starting main loop...");
 	while (!ezgl::Window::shouldClose())
 	{
 		ezgl::Window::clear();
