@@ -32,23 +32,15 @@ void updateViewport(GLFWwindow* window, int width, int height)
 	glDepthRange(-1.f, 1.f);
 }
 
-int main()
+void initOpenGl(ezgl::PerspectiveCamera& camera)
 {
-	srand(static_cast<unsigned int>(time(nullptr)));
-
-	ezgl::PerspectiveCamera camera(70, 0.1f, 300);
-	ezgl::FlyController flyController(camera);
-
-	ezgl::Material material(ezgl::Vector3<float>(1, 1, 1), 0.1f, 0.5f, 0.6f, 50.0f);
-	ezgl::Light light(ezgl::Vector3<float>(-1.0f, -1.0f, -1.0f).normalize(), ezgl::Vector3<float>(1, 1, 1), 1);
-
 	try
 	{
 		Logger::log("Init", "Initializing OpenGL...");
 		if (!glfwInit())
 		{
 			Logger::log("Init", "OpenGL initialization failed: glfwInit error", Logger::MessageType::Error);
-			return 1;
+			exit(1);
 		}
 
 		ezgl::Window::create(800, 800, "scop", camera);
@@ -64,25 +56,52 @@ int main()
 	{
 		Logger::log("Init", std::string("OpenGL initialization failed: ") + e.what(), Logger::MessageType::Error);
 		glfwTerminate();
-		return 1;
+		exit(1);
 	}
+}
 
+ezgl::Texture generateTexture(const std::string& path)
+{
 	scop::BMPParser textureImg;
 
 	try
 	{
-		textureImg.loadFile("../../resources/textures/vrere_delphine.bmp");
+		textureImg.loadFile(path);
 		Logger::log("Init", "Texture loaded", Logger::MessageType::Success);
 	}
 	catch (std::exception e)
 	{
 		Logger::log("Init", std::string("BMP Parsing failed: ") + e.what(), Logger::MessageType::Error);
 		glfwTerminate();
-		return 1;
+		exit(1);
 	}
 
-	ezgl::Texture texture = textureImg.createTexture();
+	return textureImg.createTexture();
+}
 
+ezgl::Mesh generateModel(const std::string& path)
+{
+	scop::ObjParser obj;
+	ezgl::Mesh model;
+
+	try
+	{
+		obj.loadFile(path);
+		Logger::log("ModelLoader", "Creating the model's mesh...");
+		model = obj.createMesh();
+	}
+	catch (std::exception e)
+	{
+		Logger::log("Init", std::string("Model parsing failed: ") + e.what(), Logger::MessageType::Error);
+		glfwTerminate();
+		exit(1);
+	}
+
+	return model;
+}
+
+ezgl::Shader generateShader()
+{
 	ezgl::Shader shader;
 	try
 	{
@@ -94,23 +113,27 @@ int main()
 	{
 		Logger::log("Init", std::string("Shader loading failed: ") + e.what(), Logger::MessageType::Error);
 		glfwTerminate();
-		return 1;
+		exit(1);
 	}
 
-	scop::ObjParser obj;
-	ezgl::Mesh model;
-	try
-	{
-		obj.loadFile("../../resources/models/42.obj");
-		Logger::log("ModelLoader", "Creating the model's mesh...");
-		model = obj.createMesh();
-	}
-	catch (std::exception e)
-	{
-		Logger::log("Init", std::string("Model parsing failed: ") + e.what(), Logger::MessageType::Error);
-		glfwTerminate();
-		return 1;
-	}
+	return shader;
+}
+
+int main(int argc, char **argv)
+{
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	ezgl::PerspectiveCamera camera(70, 0.1f, 300);
+	ezgl::FlyController flyController(camera);
+
+	ezgl::Material material(ezgl::Vector3<float>(1, 1, 1), 0.1f, 0.5f, 0.6f, 50.0f);
+	ezgl::Light light(ezgl::Vector3<float>(-1.0f, -1.0f, -1.0f).normalize(), ezgl::Vector3<float>(1, 1, 1), 1);
+
+	initOpenGl(camera);
+
+	ezgl::Texture texture = generateTexture("../../resources/textures/nazi fini.bmp");
+	ezgl::Shader shader = generateShader();
+	ezgl::Mesh model = generateModel("../../resources/models/teapot.obj");
 	
 	ezgl::VertexBuffer modelBuffer(shader, model);
 	scop::ModelController modelController;

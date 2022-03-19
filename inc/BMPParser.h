@@ -9,7 +9,8 @@ namespace scop
 	class BMPParser
 	{
 	protected:
-		unsigned int readInt(const std::vector<unsigned char>& vec, size_t index) const;
+		unsigned int _readInt(const std::vector<unsigned char>& vec, size_t index) const;
+		unsigned short _readShort(const std::vector<unsigned char>& vec, size_t index) const;
 	
 	public:
 		std::vector<unsigned int> pixels;

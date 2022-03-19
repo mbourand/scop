@@ -28,26 +28,38 @@ namespace scop
 		if (content.size() < 0x20)
 			throw std::runtime_error("Invalid BMP file: file too small");
 
-		unsigned int offset = this->readInt(content, 0xA);
+		unsigned int offset = this->_readInt(content, 0xA);
 		if (content.size() <= offset)
 			throw std::runtime_error("Invalid BMP file: offset too large");
 
-		this->width = this->readInt(content, 0x12);
-		this->height = this->readInt(content, 0x16);
+		this->width = this->_readInt(content, 0x12);
+		this->height = this->_readInt(content, 0x16);
+
+		unsigned short bpp = this->_readShort(content, 0x1C);
+		if (bpp != 32)
+			throw std::runtime_error("Invalid BMP file: only 32 bits per pixel is supported");
 
 		for (size_t i = offset; i < content.size(); i += 4)
 		{
 			if (i + 3 >= content.size())
 				throw std::runtime_error("Invalid BMP file: content size is not a multiple of 4");
-			this->pixels.push_back(this->readInt(content, i));
+			this->pixels.push_back(this->_readInt(content, i));
 		}
+
+		if (this->pixels.size() != this->width * this->height)
+			throw std::runtime_error("Invalid BMP file: content size is not a multiple of 4");
 
 		Logger::log("BMP Parser", "File parsed -> width: " + std::to_string(this->width) + ", height: " + std::to_string(this->height), Logger::MessageType::Success, Logger::LoggingLevel::Debug);
 	}
 
-	unsigned int BMPParser::readInt(const std::vector<unsigned char>& vec, size_t index) const
+	unsigned int BMPParser::_readInt(const std::vector<unsigned char>& vec, size_t index) const
 	{
 		return (vec[index + 3] << 24) + (vec[index + 2] << 16) + (vec[index + 1] << 8) + vec[index + 0];
+	}
+
+	unsigned short BMPParser::_readShort(const std::vector<unsigned char>& vec, size_t index) const
+	{
+		return (vec[index + 1] << 8) + vec[index + 0];
 	}
 
 	ezgl::Texture BMPParser::createTexture()

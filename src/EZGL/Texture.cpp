@@ -1,5 +1,6 @@
 #include "EZGL/Texture.h"
 #include <vector>
+#include <iostream>
 
 namespace ezgl
 {
