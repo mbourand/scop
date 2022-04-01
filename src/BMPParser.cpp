@@ -35,15 +35,19 @@ namespace scop
 		this->width = this->_readInt(content, 0x12);
 		this->height = this->_readInt(content, 0x16);
 
+		this->pixels.resize(this->width * this->height);
+
 		unsigned short bpp = this->_readShort(content, 0x1C);
 		if (bpp != 32)
 			throw std::runtime_error("Invalid BMP file: only 32 bits per pixel is supported");
 
+		int at = 0;
 		for (size_t i = offset; i < content.size(); i += 4)
 		{
 			if (i + 3 >= content.size())
 				throw std::runtime_error("Invalid BMP file: content size is not a multiple of 4");
-			this->pixels.push_back(this->_readInt(content, i));
+			this->pixels[at] = this->_readInt(content, i);
+			at++;
 		}
 
 		if (this->pixels.size() != this->width * this->height)
@@ -65,11 +69,13 @@ namespace scop
 	ezgl::Texture BMPParser::createTexture()
 	{
 		std::vector<unsigned char> formattedPixels;
-		for (auto pixel : this->pixels)
+		formattedPixels.resize(this->pixels.size() * 3);
+		for (int i = 0; i < this->pixels.size(); i++)
 		{
-			formattedPixels.push_back((pixel >> 16) & 0xFF);
-			formattedPixels.push_back((pixel >> 8) & 0xFF);
-			formattedPixels.push_back((pixel >> 0) & 0xFF);
+			auto pixel = this->pixels[i];
+			formattedPixels[i * 3] = (pixel >> 16) & 0xFF;
+			formattedPixels[i * 3 + 1] = (pixel >> 8) & 0xFF;
+			formattedPixels[i * 3 + 2] =(pixel >> 0) & 0xFF;
 		}
 		return ezgl::Texture(this->width, this->height, formattedPixels);
 	}

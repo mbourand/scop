@@ -18,7 +18,7 @@ std::string Logger::getMessageTypePrefix(Logger::MessageType type)
 
 bool Logger::log(std::string context, const std::string& message, Logger::MessageType type, Logger::LoggingLevel level)
 {
-	static Logger::LoggingLevel loggingLevel = Logger::LoggingLevel::Debug;
+	static Logger::LoggingLevel loggingLevel = Logger::LoggingLevel::Normal;
 
 	if (loggingLevel != Logger::LoggingLevel::Muted && loggingLevel >= level)
 	{

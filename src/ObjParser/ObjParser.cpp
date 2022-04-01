@@ -136,6 +136,29 @@ namespace scop
 			throw std::runtime_error("ObjParser: Could not open the file " + filename);
 
 		std::string line;
+		int fCount = 0, vCount = 0, vtCount = 0, vnCount = 0;
+		while (std::getline(file, line))
+		{
+			if (line.substr(0, 2) == "v ")
+				vCount++;
+			if (line.substr(0, 3) == "vn ")
+				vnCount++;
+			if (line.substr(0, 3) == "vt ")
+				vtCount++;
+			if (line.substr(0, 2) == "f ")
+				fCount++;
+		}
+
+		Logger::log("ObjParser", "Finished counting vertrices...", Logger::MessageType::Info, Logger::LoggingLevel::Debug);
+
+		file.clear();
+		file.seekg(0, std::ios::beg);
+
+		this->_vertrices.reserve(vCount);
+		this->_textureVertrices.reserve(vtCount);
+		this->_normalVertrices.reserve(vnCount);
+		this->_faces.reserve(fCount);
+
 		while (std::getline(file, line))
 		{
 			auto comment = line.find("#");

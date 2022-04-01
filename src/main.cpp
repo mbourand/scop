@@ -9,6 +9,7 @@
 #include "EZGL/Math/Matrix.h"
 #include "EZGL/Math/Vector.h"
 #include "EZGL/Shader.h"
+#include "EZGL/FPSCounter.h"
 #include "EZGL/PerspectiveCamera.h"
 #include "EZGL/FlyController.h"
 #include <glm/glm.hpp>
@@ -147,12 +148,14 @@ int main(int argc, char **argv)
 	
 	ezgl::VertexBuffer modelBuffer(shader, model);
 	scop::ModelController modelController;
+	ezgl::FPSCounter fpsCounter;
 
 	Logger::log("Init", "Starting main loop...");
 	while (!ezgl::Window::shouldClose())
 	{
 		ezgl::Window::clear();
 		ezgl::Window::update();
+		fpsCounter.update();
 
 		shader.bind();
 		texture.bind();
