@@ -54,8 +54,8 @@ namespace scop
 
 	void ObjParser::_parseFace(std::string data)
 	{
-		auto at = data.find("//");
-		if (at != std::string::npos)
+		size_t at = 0;
+		while ((at = data.find("//")) != std::string::npos)
 			data = data.replace(at, at + 2, "/0/");
 
 		auto points = utils::split(data, " ");

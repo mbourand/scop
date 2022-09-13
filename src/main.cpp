@@ -1,24 +1,24 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <memory>
-#include <ctime>
-#include "Logger.h"
-#include "ObjParser/ObjParser.h"
-#include "EZGL/Mesh.h"
-#include "EZGL/VertexBuffer.h"
+#include "BMPParser.h"
+#include "EZGL/FPSCounter.h"
+#include "EZGL/FlyController.h"
 #include "EZGL/Math/Matrix.h"
 #include "EZGL/Math/Vector.h"
-#include "EZGL/Shader.h"
-#include "EZGL/FPSCounter.h"
+#include "EZGL/Mesh.h"
 #include "EZGL/PerspectiveCamera.h"
-#include "EZGL/FlyController.h"
+#include "EZGL/Shader.h"
+#include "EZGL/VertexBuffer.h"
+#include "EZGL/Window.h"
+#include "Logger.h"
+#include "ModelController.h"
+#include "ObjParser/ObjParser.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <ctime>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/matrix_transform_2d.hpp>
-#include "EZGL/Window.h"
-#include "ModelController.h"
-#include "BMPParser.h"
+#include <memory>
 
 void updateViewport(GLFWwindow* window, int width, int height)
 {
@@ -100,7 +100,8 @@ ezgl::Mesh generateModel(const std::string& path)
 		exit(1);
 	}
 
-	Logger::log("ModelLoader", std::to_string(model.getPositions().size() / 3) + " triangles loaded!", Logger::MessageType::Success);
+	Logger::log("ModelLoader", std::to_string(model.getPositions().size() / 3) + " triangles loaded!",
+				Logger::MessageType::Success);
 
 	return model;
 }
@@ -124,7 +125,7 @@ ezgl::Shader generateShader()
 	return shader;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	srand(static_cast<unsigned int>(time(nullptr)));
 
@@ -145,7 +146,7 @@ int main(int argc, char **argv)
 	ezgl::Mesh model = generateModel(argv[1]);
 	ezgl::Texture texture = generateTexture(argv[2]);
 	ezgl::Shader shader = generateShader();
-	
+
 	ezgl::VertexBuffer modelBuffer(shader, model);
 	scop::ModelController modelController;
 	ezgl::FPSCounter fpsCounter;
@@ -167,6 +168,7 @@ int main(int argc, char **argv)
 		shader.sendUniform("u_material", material);
 		shader.sendUniform("u_rotation", modelController.getRotationMatrix());
 		shader.sendUniform("u_translation", modelController.getTranslationMatrix());
+		shader.sendUniform("u_centerTranslation", model.getCenterTranslationMatrix());
 		shader.sendUniform("u_transitionState", modelController.getTransitionValue());
 
 		modelBuffer.draw();

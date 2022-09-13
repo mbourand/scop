@@ -11,6 +11,8 @@ namespace ezgl
 	public:
 		KeyListener();
 		~KeyListener();
+		KeyListener(const KeyListener& other);
+		KeyListener& operator=(const KeyListener& other);
 		virtual void onKeyPressed(int key, int scancode) = 0;
 		virtual void onKeyReleased(int key, int scancode) = 0;
 		virtual void onKeyRepeat(int key, int scancode) = 0;

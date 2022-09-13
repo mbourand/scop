@@ -72,15 +72,15 @@ namespace scop
 		{
 			switch (this->_direction)
 			{
-			case Direction::X:
-				this->_yaw += speed;
-				break;
-			case Direction::Y:
-				this->_pitch += speed;
-				break;
-			case Direction::Z:
-				this->_roll += speed;
-				break;
+				case Direction::X:
+					this->_yaw += speed;
+					break;
+				case Direction::Y:
+					this->_pitch += speed;
+					break;
+				case Direction::Z:
+					this->_roll += speed;
+					break;
 			}
 		}
 
@@ -88,15 +88,15 @@ namespace scop
 		{
 			switch (this->_direction)
 			{
-			case Direction::X:
-				this->_pos.x += speed;
-				break;
-			case Direction::Y:
-				this->_pos.y += speed;
-				break;
-			case Direction::Z:
-				this->_pos.z += speed;
-				break;
+				case Direction::X:
+					this->_pos.x += speed;
+					break;
+				case Direction::Y:
+					this->_pos.y += speed;
+					break;
+				case Direction::Z:
+					this->_pos.z += speed;
+					break;
 			}
 		}
 
@@ -116,9 +116,7 @@ namespace scop
 			ezgl::Vector3<float>(0, 0, 1),
 		};
 
-		std::array<float, 3> values = {
-			this->_yaw, this->_pitch, this->_roll
-		};
+		std::array<float, 3> values = {this->_yaw, this->_pitch, this->_roll};
 
 		std::array<ezgl::Matrix<float, 4, 4>, 3> matrixes;
 
@@ -152,14 +150,6 @@ namespace scop
 		return matrixes[0] * matrixes[1] * matrixes[2];
 	}
 
-	
-	ezgl::Matrix<float, 4, 4> ModelController::getTranslationMatrix() const
-	{
-		return ezgl::translation(this->_pos);
-	}
-
-	float ModelController::getTransitionValue() const
-	{
-		return this->_transitionValue;
-	}
+	ezgl::Matrix<float, 4, 4> ModelController::getTranslationMatrix() const { return ezgl::translation(this->_pos); }
+	float ModelController::getTransitionValue() const { return this->_transitionValue; }
 }

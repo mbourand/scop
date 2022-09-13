@@ -8,6 +8,7 @@ in vec3 a_color;
 uniform mat4 u_mvp;
 uniform mat4 u_rotation;
 uniform mat4 u_translation;
+uniform mat4 u_centerTranslation;
 
 out vec3 v_position;
 out vec3 v_normal;
@@ -19,6 +20,6 @@ void main()
 	v_position = a_position;
 	v_normal = a_normal;
 	v_color = a_color;
-	gl_Position = u_mvp * u_translation * u_rotation * vec4(a_position, 1.0);
+	gl_Position = u_mvp * u_translation * inverse(u_centerTranslation) * u_rotation * u_centerTranslation * vec4(a_position, 1.0);
 	v_texCoord = vec2(v_position.z, v_position.y);
 }

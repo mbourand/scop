@@ -15,6 +15,12 @@ namespace ezgl
 		static_cast<void>(std::remove_if(_instances.begin(), _instances.end(), [this](KeyListener* a) -> bool { return a == this; }));
 	}
 
+	KeyListener::KeyListener(const KeyListener& other) { _instances.push_back(this); }
+	KeyListener& KeyListener::operator=(const KeyListener& other)
+	{
+		_instances.push_back(this);
+		return *this;
+	};
 
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{

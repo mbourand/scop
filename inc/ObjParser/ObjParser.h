@@ -1,10 +1,10 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include "Face.h"
 #include "../EZGL/Math/Vector.h"
 #include "..\..\inc\EZGL\Mesh.h"
+#include "Face.h"
+#include <string>
+#include <vector>
 
 namespace scop
 {
@@ -15,7 +15,7 @@ namespace scop
 		std::vector<ezgl::Vector4<float>> _textureVertrices;
 		std::vector<ezgl::Vector3<float>> _normalVertrices;
 		std::vector<Face> _faces;
-	
+
 	private:
 		void _parseVertex(std::string line);
 		void _parseTextureVertex(std::string line);
@@ -28,7 +28,7 @@ namespace scop
 		ObjParser& operator=(const ObjParser& other) = default;
 
 		ObjParser(const std::string& filename);
-		
+
 		void loadFile(const std::string& filename);
 
 		std::vector<ezgl::Vector4<float>> getVertrices() const;

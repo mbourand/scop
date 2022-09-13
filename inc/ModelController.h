@@ -1,9 +1,9 @@
 #pragma once
 
 #include "EZGL/KeyListener.h"
-#include "EZGL/MouseListener.h"
 #include "EZGL/Math/Matrix.h"
 #include "EZGL/Math/Vector.h"
+#include "EZGL/MouseListener.h"
 
 namespace scop
 {
@@ -12,12 +12,16 @@ namespace scop
 	public:
 		enum class Direction
 		{
-			X, Y, Z, None
+			X,
+			Y,
+			Z,
+			None
 		};
 
 		enum class Mode
 		{
-			Rotate, Move
+			Rotate,
+			Move
 		};
 
 	protected:
@@ -45,9 +49,8 @@ namespace scop
 
 		virtual void update(float deltaTime) override;
 
-
 		float getTransitionValue() const;
 		ezgl::Matrix<float, 4, 4> getRotationMatrix() const;
-		ezgl::Matrix<float, 4, 4> ModelController::getTranslationMatrix() const;
+		ezgl::Matrix<float, 4, 4> getTranslationMatrix() const;
 	};
 }

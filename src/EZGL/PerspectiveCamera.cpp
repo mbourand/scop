@@ -24,25 +24,31 @@ namespace ezgl
 		this->_far = far;
 
 		this->_position = Vector3<float>(0, 0, 5);
-		
+
 		this->_direction = Vector3<float>(0, 0, -1);
 		this->_direction.normalize();
 		this->_yaw = -90.0f;
 		this->_pitch = 0;
 
-		this->_view = ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
-		this->_projection = ezgl::perspective(glm::radians(this->_fov), ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()), this->_near, this->_far);
+		this->_view =
+			ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
+		this->_projection = ezgl::perspective((3.14159 / 180) * this->_fov,
+											  ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()),
+											  this->_near, this->_far);
 	}
 
 	void PerspectiveCamera::updateProjection()
 	{
-		this->_projection = ezgl::perspective(glm::radians(this->_fov), ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()), this->_near, this->_far);
+		this->_projection = ezgl::perspective((3.14159 / 180) * this->_fov,
+											  ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()),
+											  this->_near, this->_far);
 	}
 
 	void PerspectiveCamera::move(const Vector3<float>& dir)
 	{
 		this->_position += dir;
-		this->_view = ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
+		this->_view =
+			ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
 	}
 
 	// https://learnopengl.com/Getting-started/Camera
@@ -60,14 +66,12 @@ namespace ezgl
 		this->_direction.y = std::sin(ezgl::radians(this->_pitch));
 		this->_direction.z = std::sin(ezgl::radians(this->_yaw)) * std::cos(ezgl::radians(this->_pitch));
 		this->_direction.normalize();
-		
-		this->_view = ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
+
+		this->_view =
+			ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
 	}
 
-	Matrix<float, 4, 4> PerspectiveCamera::getMVP() const
-	{
-		return this->_projection * this->_view;
-	}
+	Matrix<float, 4, 4> PerspectiveCamera::getMVP() const { return this->_projection * this->_view; }
 
 	const Vector3<float>& PerspectiveCamera::getPosition() const { return this->_position; }
 	const Vector3<float>& PerspectiveCamera::getDirection() const { return this->_direction; };

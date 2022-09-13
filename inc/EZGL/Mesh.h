@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
+#include "Math/Matrix.h"
 #include "Math/Vector.h"
+#include <vector>
+
 
 namespace ezgl
 {
@@ -11,6 +13,9 @@ namespace ezgl
 		std::vector<float> _positions;
 		std::vector<float> _normals;
 		std::vector<float> _colors;
+		ezgl::Vector3<float> _min = Vector3<float>(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+		ezgl::Vector3<float> _max = Vector3<float>(std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
+		ezgl::Vector3<float> _center;
 
 	public:
 		Mesh() = default;
@@ -29,5 +34,7 @@ namespace ezgl
 		std::vector<float> getNormals() const;
 		std::vector<float> getColors() const;
 		size_t getDataTypeSize() const;
+
+		ezgl::Matrix<float, 4, 4> getCenterTranslationMatrix() const;
 	};
 }

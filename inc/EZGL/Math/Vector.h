@@ -10,8 +10,7 @@ namespace ezgl
 	*/
 	template<typename T> class Vector4;
 
-	template<typename T>
-	class Vector3
+	template<typename T> class Vector3
 	{
 	public:
 		T x, y, z;
@@ -125,15 +124,26 @@ namespace ezgl
 			return *this;
 		}
 
-		float length() const
+		Vector3<T> operator/(const T& x) const
 		{
-			return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+			Vector3<T> cpy = *this;
+			cpy.x = this->x / x;
+			cpy.y = this->y / x;
+			cpy.z = this->z / x;
+			return cpy;
 		}
 
-		glm::vec3 toGLM() const
+		Vector3<T> operator/=(const T& x)
 		{
-			return glm::vec3(this->x, this->y, this->z);
+			this->x /= x;
+			this->y /= x;
+			this->z /= x;
+			return *this;
 		}
+
+		float length() const { return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z); }
+
+		glm::vec3 toGLM() const { return glm::vec3(this->x, this->y, this->z); }
 
 		Vector3<T> normalize()
 		{
@@ -146,26 +156,20 @@ namespace ezgl
 
 		Vector3<T> cross(const Vector3<T>& other) const
 		{
-			return Vector3<T>(
-				this->y * other.z - other.y * this->z,
-				this->z * other.x - other.z * this->x,
-				this->x * other.y - other.x * this->y
-			);
+			return Vector3<T>(this->y * other.z - other.y * this->z, this->z * other.x - other.z * this->x,
+							  this->x * other.y - other.x * this->y);
 		}
 	};
 
-	
 	/*
 	** VECTOR 4
 	*/
-	template<typename T>
-	class Vector4
+	template<typename T> class Vector4
 	{
 	public:
 		T x, y, z, w;
 
-		Vector4<T>()
-		{}
+		Vector4<T>() {}
 
 		Vector4<T>(const T& x, const T& y, const T& z, const T& w)
 		{
@@ -282,10 +286,7 @@ namespace ezgl
 			return *this;
 		}
 
-		float length() const
-		{
-			return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
-		}
+		float length() const { return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z); }
 
 		Vector4<T> normalize()
 		{
@@ -297,9 +298,6 @@ namespace ezgl
 			return *this;
 		}
 
-		glm::vec4 toGLM() const
-		{
-			return glm::vec4(this->x, this->y, this->z, this->w);
-		}
+		glm::vec4 toGLM() const { return glm::vec4(this->x, this->y, this->z, this->w); }
 	};
 }
