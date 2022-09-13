@@ -1,8 +1,6 @@
 #include "EZGL/PerspectiveCamera.h"
 #include "EZGL/Math/mathutils.h"
 #include "EZGL/Window.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 namespace ezgl
 {
@@ -32,14 +30,14 @@ namespace ezgl
 
 		this->_view =
 			ezgl::lookAt(this->_position, this->_position + this->_direction, Vector3<float>(0.0f, 1.0f, 0.0f));
-		this->_projection = ezgl::perspective((3.14159 / 180) * this->_fov,
+		this->_projection = ezgl::perspective((ezgl::PI / 180) * this->_fov,
 											  ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()),
 											  this->_near, this->_far);
 	}
 
 	void PerspectiveCamera::updateProjection()
 	{
-		this->_projection = ezgl::perspective((3.14159 / 180) * this->_fov,
+		this->_projection = ezgl::perspective((ezgl::PI / 180) * this->_fov,
 											  ezgl::Window::getWidth() / static_cast<float>(ezgl::Window::getHeight()),
 											  this->_near, this->_far);
 	}

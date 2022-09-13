@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <glm/glm.hpp>
 
 namespace ezgl
 {
@@ -143,7 +142,7 @@ namespace ezgl
 
 		float length() const { return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z); }
 
-		glm::vec3 toGLM() const { return glm::vec3(this->x, this->y, this->z); }
+		// glm::vec3 toGLM() const { return glm::vec3(this->x, this->y, this->z); }
 
 		Vector3<T> normalize()
 		{
@@ -298,6 +297,6 @@ namespace ezgl
 			return *this;
 		}
 
-		glm::vec4 toGLM() const { return glm::vec4(this->x, this->y, this->z, this->w); }
+		// glm::vec4 toGLM() const { return glm::vec4(this->x, this->y, this->z, this->w); }
 	};
 }

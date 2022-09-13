@@ -20,5 +20,5 @@ add_subdirectory(external/GLEW)
 
 # Linking
 
-target_include_directories(${PROJECT_NAME} PUBLIC inc/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLFW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLEW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLM)
+target_include_directories(${PROJECT_NAME} PUBLIC inc/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLFW/include/ PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/GLEW/include)
 target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES} libglew_static opengl32)
